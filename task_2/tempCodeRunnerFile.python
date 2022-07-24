@@ -1,0 +1,22 @@
+from matplotlib import pyplot as plt
+import cv2 as cv
+import numpy as np
+
+def plot_image(img, figsize_in_inches=(5,5)):
+    fig, ax = plt.subplots(figsize=figsize_in_inches)
+    ax.imshow(cv.cvtColor(img, cv.COLOR_BGR2RGB))
+    plt.show()
+    
+def plot_images(imgs, figsize_in_inches=(5,5)):
+    fig, axs = plt.subplots(1, len(imgs), figsize=figsize_in_inches)
+    for col, img in enumerate(imgs):
+        axs[col].imshow(cv.cvtColor(img, cv.COLOR_BGR2RGB))
+    plt.show()
+
+
+from stitching.feature_detector import FeatureDetector
+
+finder = FeatureDetector()
+features = [finder.detect_features(img) for img in medium_imgs]
+keypoints_center_img = finder.draw_keypoints(medium_imgs[1], features[1])
+plot_image(keypoints_center_img, (15,10))
